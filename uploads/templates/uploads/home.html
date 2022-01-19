@@ -2,9 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CNAB Uploads</title>
 </head>
 <body>
-
+<h3>Upload CNAB file</h3>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <input type="file" name="cnab_file">
+    <br><br>
+    <button type="submit">Upload</button>
+</form>
 </body>
 </html>
