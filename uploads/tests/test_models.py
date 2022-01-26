@@ -22,4 +22,14 @@ class ParserModelTest(TestCase):
                              'content for line 2')
         result = parser.validate_content()
 
-        self.assertFalse(result, 'One or more lines have lenght != 19')
+        self.assertFalse(result, 'The file is OK.')
+
+    def test_validate_content_2(self):
+        parser = Parser(text='2201903010000050200845152540738473****1231231233'
+                             'MARCOS PEREIRAMERCADO DA AVENIDA\n'
+                             '0201903010000060200232702980566777****1313172712'
+                             'JOSE COSTA    MERCEARIA 3 IRMAOS')
+
+        result = parser.validate_content()
+
+        self.assertFalse(result, 'The file is OK.')
