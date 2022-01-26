@@ -57,8 +57,18 @@ class Cnab(FunctionalTest):
         self.browser.find_element_by_name('cnab_file').send_keys(file_path)
         self.browser.find_element_by_tag_name('button').click()
 
-        operacoes_table = self.browser.find_element_by_id('operacoes')
-        self.assertIn('Financiamento (-)', operacoes_table.text)
-        self.assertIn('BAR DO JOÃO', operacoes_table.text)
-        self.assertIn('Recebimento Empréstimo (+)', operacoes_table.text)
-        self.assertIn('LOJA DO Ó - MATRIZ', operacoes_table.text)
+        operacoes_table = self.browser.find_element_by_id('operacoes').text
+        self.assertIn('Financiamento (-)', operacoes_table)
+        self.assertIn('BAR DO JOÃO', operacoes_table)
+        self.assertIn('Recebimento Empréstimo (+)', operacoes_table)
+        self.assertIn('LOJA DO Ó - MATRIZ', operacoes_table)
+
+    def test_upload_right_content_file_displays_account_balance(self):
+        file_path = os.path.join(settings.BASE_DIR, 'functional_tests',
+                                 'cnab_file.txt')
+        self.browser.find_element_by_name('cnab_file').send_keys(file_path)
+        self.browser.find_element_by_tag_name('button').click()
+
+        operacoes_table = self.browser.find_element_by_id('operacoes').text
+        self.assertIn('Saldo em conta', operacoes_table)
+        self.assertIn('-10.00', operacoes_table)

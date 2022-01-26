@@ -1,4 +1,3 @@
-from django.core.files.storage import FileSystemStorage
 from django.shortcuts import render
 
 from uploads.models import Parser, Transacao
@@ -17,8 +16,11 @@ def home_page(request):
         else:
             parser.save_data()
             transacoes = Transacao.objects.all()
+            balance = Transacao.get_balance()
             return render(request, 'uploads/home.html',
-                          {'transacoes': transacoes})
+                          {'transacoes': transacoes, 'balance': balance})
 
     transacoes = Transacao.objects.all()
-    return render(request, 'uploads/home.html', {'transacoes': transacoes})
+    balance = Transacao.get_balance()
+    return render(request, 'uploads/home.html',
+                  {'transacoes': transacoes, 'balance': balance})

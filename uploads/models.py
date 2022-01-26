@@ -111,6 +111,21 @@ class Transacao(models.Model):
     loja = models.ForeignKey(Loja, related_name='transacoes',
                              on_delete=models.CASCADE, default=None)
 
+    @classmethod
+    def get_balance(cls):
+        result = 0
+        for transacao in cls.objects.all():
+            result += cls.sum_transacao(transacao)
+
+        return result
+
+    @staticmethod
+    def sum_transacao(transacao):
+        if transacao.tipo in [1, 4, 5, 6, 7, 8]:
+            return transacao.valor
+        else:
+            return -transacao.valor
+
 
 class Cartao(models.Model):
     numero = models.CharField(max_length=12, default='')
