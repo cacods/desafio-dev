@@ -20,4 +20,5 @@ def home_page(request):
             return render(request, 'uploads/home.html',
                           {'transacoes': transacoes})
 
-    return render(request, 'uploads/home.html')
+    transacoes = Transacao.objects.all()
+    return render(request, 'uploads/home.html', {'transacoes': transacoes})

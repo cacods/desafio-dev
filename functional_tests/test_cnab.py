@@ -1,8 +1,10 @@
+import datetime
 import os
 
 from django.conf import settings
 
 from functional_tests.base import FunctionalTest
+from uploads.models import Loja, Transacao
 
 
 class Cnab(FunctionalTest):
@@ -15,6 +17,18 @@ class Cnab(FunctionalTest):
         # Has a button to upload the file
         button_text = self.browser.find_element_by_tag_name('button').text
         self.assertEqual('Upload', button_text)
+
+    def test_display_transacoes_data_if_they_exists(self):
+        loja = Loja.objects.create(nome='Bar do Zé', representante='Caco')
+        Transacao.objects.create(
+            tipo=2, data=datetime.datetime.now(),
+            hora=datetime.datetime.time(datetime.datetime.now()),
+            valor=10.0, loja=loja)
+        self.browser.get(self.live_server_url)
+
+        operacoes_table = self.browser.find_element_by_id('operacoes')
+        self.assertIn('Bar do Zé', operacoes_table.text)
+        self.assertIn('10.00', operacoes_table.text)
 
     def test_upload_wrong_content_file_displays_message(self):
         file_path = os.path.join(settings.BASE_DIR, 'functional_tests',

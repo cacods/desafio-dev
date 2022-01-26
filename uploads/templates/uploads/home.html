@@ -31,8 +31,8 @@
             <tr>
                 <td>{{ transacao.loja.nome }}</td>
                 <td>{% get_operacao transacao.tipo %}</td>
-                <td>{{ transacao.data }} {{ transacao.hora }}</td>
-                <td>{{ transacao.valor }}</td>
+                <td>{{ transacao.data | date:'d/m/Y' }} {{ transacao.hora | time:'H:i:s' }}</td>
+                <td>{{ transacao.valor | floatformat:2 }}</td>
             </tr>
         {% endfor %}
         </tbody>
