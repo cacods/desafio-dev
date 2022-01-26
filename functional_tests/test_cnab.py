@@ -37,14 +37,14 @@ class Cnab(FunctionalTest):
         self.assertNotIn('Data', body)
         self.assertNotIn('Valor', body)
 
-    def test_uplaod_right_content_file_loads_table_with_data(self):
+    def test_upload_right_content_file_loads_table_with_data(self):
         file_path = os.path.join(settings.BASE_DIR, 'functional_tests',
                                  'cnab_file.txt')
         self.browser.find_element_by_name('cnab_file').send_keys(file_path)
         self.browser.find_element_by_tag_name('button').click()
 
         operacoes_table = self.browser.find_element_by_id('operacoes')
-        self.assertIn('Financiamento (-)', operacoes_table)
-        self.assertIn('BAR DO JOÃO', operacoes_table)
-        self.assertIn('Recebimento Empréstimo (+)', operacoes_table)
-        self.assertIn('LOJA DO Ó - MATRIZ', operacoes_table)
+        self.assertIn('Financiamento (-)', operacoes_table.text)
+        self.assertIn('BAR DO JOÃO', operacoes_table.text)
+        self.assertIn('Recebimento Empréstimo (+)', operacoes_table.text)
+        self.assertIn('LOJA DO Ó - MATRIZ', operacoes_table.text)
