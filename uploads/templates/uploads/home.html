@@ -15,5 +15,27 @@
 <div id="message">
     {{ message }}
 </div>
+{% if transacoes %}
+    <table id="operacoes">
+        <thead>
+        <tr>
+            <th>Loja</th>
+            <th>Operação</th>
+            <th>Data</th>
+            <th>Valor</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for transacao in transacoes %}
+                <td>{{ transacao.loja.nome }}</td>
+                <td>{{ transacao.tipo }}</td>
+                <td>{{ transacao.data }} {{ transacao.hora }}</td>
+                <td>{{ transacao.valor }}</td>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+{% endif %}
 </body>
 </html>

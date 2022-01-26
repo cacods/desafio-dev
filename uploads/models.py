@@ -28,3 +28,24 @@ class Parser(models.Model):
                 return False
 
         return True
+
+
+class Loja(models.Model):
+    cpf = models.CharField(max_length=11, default='')
+    nome = models.CharField(max_length=19, default='')
+    representante = models.CharField(max_length=14, default='')
+
+
+class Transacao(models.Model):
+    tipo = models.IntegerField()
+    data = models.DateField()
+    hora = models.TimeField()
+    valor = models.FloatField()
+    loja = models.ForeignKey(Loja, related_name='transacoes',
+                             on_delete=models.CASCADE, default=None)
+
+
+class Cartao(models.Model):
+    numero = models.CharField(max_length=12, default='')
+    loja = models.ForeignKey(Loja, related_name='cartoes',
+                             on_delete=models.CASCADE, default=None)

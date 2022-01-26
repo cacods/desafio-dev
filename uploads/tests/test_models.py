@@ -1,8 +1,9 @@
-from unittest import TestCase
+import datetime
 
 from django.db import IntegrityError
+from django.test import TestCase
 
-from uploads.models import Parser
+from uploads.models import Parser, Loja, Transacao, Cartao
 
 
 class ParserModelTest(TestCase):
@@ -33,3 +34,45 @@ class ParserModelTest(TestCase):
         result = parser.validate_content()
 
         self.assertFalse(result, 'The file is OK.')
+
+
+class LojaModelTest(TestCase):
+
+    def test_default_attributes(self):
+        loja = Loja()
+        self.assertEqual(loja.cpf, '')
+        self.assertEqual(loja.nome, '')
+        self.assertEqual(loja.representante, '')
+
+
+class TransacaoModelTest(TestCase):
+
+    def test_default_attributes(self):
+        transacao = Transacao()
+        self.assertEqual(transacao.tipo, None)
+        self.assertEqual(transacao.data, None)
+        self.assertEqual(transacao.hora, None)
+        self.assertEqual(transacao.valor, None)
+
+    def test_transacao_is_related_to_loja(self):
+        loja = Loja.objects.create()
+        transacao = Transacao(
+            tipo=1, data=datetime.datetime.now(),
+            hora=datetime.datetime.time(datetime.datetime.now()), valor=0.0)
+        transacao.loja = loja
+        transacao.save()
+        self.assertIn(transacao, loja.transacoes.all())
+
+
+class CartaoModelTest(TestCase):
+
+    def test_default_attributes(self):
+        cartao = Cartao()
+        self.assertEqual(cartao.numero, '')
+
+    def test_cartao_is_related_to_loja(self):
+        loja = Loja.objects.create()
+        cartao = Cartao()
+        cartao.loja = loja
+        cartao.save()
+        self.assertIn(cartao, loja.cartoes.all())

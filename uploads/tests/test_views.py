@@ -28,3 +28,15 @@ class HomePageTest(TestCase):
         response = self.client.post(reverse('home'), {'cnab_file': file})
 
         self.assertContains(response, 'Formato do arquivo inválido.')
+
+    def test_right_file_displays_table_content(self):
+        file = SimpleUploadedFile(
+            'file.txt', b'2201903010000050200845152540738473****1231231233'
+                        b'MARCOS PEREIRAMERCADO DA AVENIDA\n'
+                        b'3201903010000060200232702980566777****1313172712'
+                        b'JOSE COSTA    MERCEARIA 3 IRMAOS')
+
+        response = self.client.post(reverse('home'), {'cnab_file': file})
+
+        self.assertContains(response, 'MERCADO DA AVENIDA')
+        self.assertContains(response, 'MERCEARIA 3 IRMAOS')
