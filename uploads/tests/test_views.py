@@ -33,3 +33,9 @@ class HomePageTest(TestCase):
 
         with(self.assertRaises(FileNotFoundError)):
             open('media/file.txt')
+
+    def test_invalid_file_format_returns_message(self):
+        file = SimpleUploadedFile('file.txt', b'any_content')
+        response = self.client.post(reverse('home'), {'cnab_file': file})
+
+        self.assertContains(response, 'Formato do arquivo inválido.')

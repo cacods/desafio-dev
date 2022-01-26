@@ -2,6 +2,7 @@ from functional_tests.base import FunctionalTest
 
 
 class Cnab(FunctionalTest):
+
     def test_basic_page_elements(self):
         self.browser.get(self.live_server_url)
 
