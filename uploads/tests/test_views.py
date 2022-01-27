@@ -22,7 +22,7 @@ class HomePageTest(TestCase):
 
         response = self.client.get('/')
         self.assertContains(response, 'Bar do Zé')
-        self.assertContains(response, '10.00')
+        self.assertContains(response, '10,00')
 
     def test_file_with_wrong_line_length_returns_message(self):
         file = SimpleUploadedFile('file.txt', b'any_content')
@@ -62,4 +62,4 @@ class HomePageTest(TestCase):
         response = self.client.post(reverse('home'), {'cnab_file': file})
 
         self.assertContains(response, 'Saldo em conta')
-        self.assertContains(response, '-1104.00')
+        self.assertContains(response, '-1104,00')

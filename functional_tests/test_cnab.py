@@ -11,8 +11,8 @@ class Cnab(FunctionalTest):
 
     def test_basic_page_elements(self):
         # Head text indicating to upload de file
-        main_head = self.browser.find_element_by_tag_name('h3').text
-        self.assertEqual('Upload CNAB file', main_head)
+        main_head = self.browser.find_element_by_tag_name('h1').text
+        self.assertEqual('CNAB Parser Tool', main_head)
 
         # Has a button to upload the file
         button_text = self.browser.find_element_by_tag_name('button').text
@@ -28,7 +28,7 @@ class Cnab(FunctionalTest):
 
         operacoes_table = self.browser.find_element_by_id('operacoes')
         self.assertIn('Bar do Zé', operacoes_table.text)
-        self.assertIn('10.00', operacoes_table.text)
+        self.assertIn('10,00', operacoes_table.text)
 
     def test_upload_wrong_content_file_displays_message(self):
         file_path = os.path.join(settings.BASE_DIR, 'functional_tests',
@@ -71,4 +71,4 @@ class Cnab(FunctionalTest):
 
         operacoes_table = self.browser.find_element_by_id('operacoes').text
         self.assertIn('Saldo em conta', operacoes_table)
-        self.assertIn('-10.00', operacoes_table)
+        self.assertIn('-10,00', operacoes_table)
