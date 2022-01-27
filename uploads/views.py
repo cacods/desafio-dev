@@ -7,7 +7,12 @@ def home_page(request):
     if request.method == 'POST' and request.FILES['cnab_file']:
         file = request.FILES['cnab_file']
 
-        parser = Parser(text=file.read().decode('utf-8'))
+        try:
+            parser = Parser(text=file.read().decode('utf-8'))
+        except UnicodeError:
+            message = 'Formato do arquivo inválido.'
+            return render(request, 'uploads/home.html', {'message': message})
+
         file.close()
         valid_content = parser.validate_content()
         if not valid_content:
