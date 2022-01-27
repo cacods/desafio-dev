@@ -57,7 +57,14 @@
                     {% endfor %}
                     <tr>
                         <td colspan="3"><strong>Saldo em conta</strong></td>
-                        <td class="text-right"><strong>{{ balance | floatformat:2 }}</strong></td>
+                        <td class="text-right">
+                            <strong>
+                                {% if balance >= 0 %}
+                                    {{ balance | floatformat:2 }}
+                                {% else %}
+                                    <span class="text-danger">{{ balance | floatformat:2 }}</span>
+                                {% endif %}
+                            </strong></td>
                     </tr>
                     </tbody>
                 </table>
