@@ -2,4 +2,4 @@ __pycache__
 *.pyc
 geckodriver.log
 
-env
+.idea
